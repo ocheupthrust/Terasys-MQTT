@@ -6,58 +6,81 @@ $ ssh root@DROPLET_IP
 Now you are on the Droplet's shell.
 
 1. On your instance or droplet; mosquitto broker will need a user named as mosquitto :
+
 $ sudo adduser mosquitto
 
 2. Below libraries are default for mosquitto: 
+
 $ sudo apt-get update
+
 $ sudoapt-get install build-essential libwrap0-dev libssl-dev libc-ares-dev uuid-dev xsltproc 
 
 3. For MQTT over Websocket support, install the websockets library:
+
 $ sudo apt-get install libwebsockets-dev
 
 4. Get mosquitto library and unpack:
+
 $ cd /home/mosquitto
+
 $ wget http://mosquitto.org/files/source/mosquitto-1.4.8.tar.gz
+
 $ tar xvzf mosquitto-1.4.8.tar.gz
+
 $ cd mosquitto-1.4.8
 
 5. To enable MQTT over Websocket support, modify the config.mk and enable WITH_WEBSOCKETS flag like :
+
 WITH_WEBSOCKETS:=yes
 
 6. Build and install the library.
+
 $ make
+
 $ sudo make install
 
 7. Sync the libs.
+
 $ sudo /sbin/ldconfig
 
 
 B. Configuration
 
 1. Adding user by creating password file.
+
 $ sudo mosquitto_passwd -c /etc/mosquitto/pwfile terasys
 
 2. For more users, use below command without -c parameter to not override the password file:
+
 $ sudo mosquitto_passwd /etc/mosquitto/pwfile terasys2
 
 3. You will be able to see user list and hashed passwords like below :
+
 $ cat /etc/mosquitto/pwfile
 
 4. Create ACL (Access control list) file :
+
 $ sudo cp /etc/mosquitto/aclfile.example /etc/mosquitto/aclfile
 
 5. Configure ACL by adding your users with privileged topics. By using vi or nano editor, add the lines below to the ACL file :
+
 user terasys
+
 topic teradev/#
 
+
 user terasys2
+
 topic teradev2/#
 
 6. Add database destination for mosquitto :
+
 $ sudo mkdir /var/lib/mosquitto/
+
 $ sudo chown mosquitto:mosquitto /var/lib/mosquitto/ -R
 
 7. Create mosquitto configuration file :
+
 $ sudo cp /etc/mosquitto/mosquitto.conf.example /etc/mosquitto/mosquitto.conf
 
 8. Need to bind configuration files and settings by adding the lines to the mosquitto.conf :
