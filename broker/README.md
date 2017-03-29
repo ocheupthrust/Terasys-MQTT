@@ -4,23 +4,30 @@ A. Installation
 So need SSH connection first, use the command below :
 $ ssh root@DROPLET_IP
 Now you are on the Droplet's shell.
+
 1. On your instance or droplet; mosquitto broker will need a user named as mosquitto :
 $ sudo adduser mosquitto
+
 2. Below libraries are default for mosquitto: 
 $ sudo apt-get update
 $ sudoapt-get install build-essential libwrap0-dev libssl-dev libc-ares-dev uuid-dev xsltproc 
+
 3. For MQTT over Websocket support, install the websockets library:
 $ sudo apt-get install libwebsockets-dev
+
 4. Get mosquitto library and unpack:
 $ cd /home/mosquitto
 $ wget http://mosquitto.org/files/source/mosquitto-1.4.8.tar.gz
 $ tar xvzf mosquitto-1.4.8.tar.gz
 $ cd mosquitto-1.4.8
+
 5. To enable MQTT over Websocket support, modify the config.mk and enable WITH_WEBSOCKETS flag like :
 WITH_WEBSOCKETS:=yes
+
 6. Build and install the library.
 $ make
 $ sudo make install
+
 7. Sync the libs.
 $ sudo /sbin/ldconfig
 
