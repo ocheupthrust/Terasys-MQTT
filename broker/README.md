@@ -1,89 +1,66 @@
 A. Installation
 
-0. Steps below will be applied on Droplet or any instance that is target computer. 
-So need SSH connection first, use the command below :
-$ ssh root@DROPLET_IP
-Now you are on the Droplet's shell.
+0. Steps below will be applied on Droplet or any instance that is target computer. <br />
+So need SSH connection first, use the command below :<br />
+$ ssh root@DROPLET_IP<br />
+Now you are on the Droplet's shell.<br />
 
-1. On your instance or droplet; mosquitto broker will need a user named as mosquitto :
+1. On your instance or droplet; mosquitto broker will need a user named as mosquitto :<br />
+$ sudo adduser mosquitto<br />
 
-$ sudo adduser mosquitto
+2. Below libraries are default for mosquitto: <br />
+$ sudo apt-get update<br />
+$ sudoapt-get install build-essential libwrap0-dev libssl-dev libc-ares-dev uuid-dev xsltproc<br /> 
 
-2. Below libraries are default for mosquitto: 
+3. For MQTT over Websocket support, install the websockets library:<br />
+$ sudo apt-get install libwebsockets-dev<br />
 
-$ sudo apt-get update
+4. Get mosquitto library and unpack:<br />
+$ cd /home/mosquitto<br />
+$ wget http://mosquitto.org/files/source/mosquitto-1.4.8.tar.gz<br />
+$ tar xvzf mosquitto-1.4.8.tar.gz<br />
+$ cd mosquitto-1.4.8<br />
 
-$ sudoapt-get install build-essential libwrap0-dev libssl-dev libc-ares-dev uuid-dev xsltproc 
+5. To enable MQTT over Websocket support, modify the config.mk and enable WITH_WEBSOCKETS flag like :<br />
+WITH_WEBSOCKETS:=yes<br />
 
-3. For MQTT over Websocket support, install the websockets library:
+6. Build and install the library.<br />
+$ make<br />
+$ sudo make install<br />
 
-$ sudo apt-get install libwebsockets-dev
-
-4. Get mosquitto library and unpack:
-
-$ cd /home/mosquitto
-
-$ wget http://mosquitto.org/files/source/mosquitto-1.4.8.tar.gz
-
-$ tar xvzf mosquitto-1.4.8.tar.gz
-
-$ cd mosquitto-1.4.8
-
-5. To enable MQTT over Websocket support, modify the config.mk and enable WITH_WEBSOCKETS flag like :
-
-WITH_WEBSOCKETS:=yes
-
-6. Build and install the library.
-
-$ make
-
-$ sudo make install
-
-7. Sync the libs.
-
-$ sudo /sbin/ldconfig
+7. Sync the libs.<br />
+$ sudo /sbin/ldconfig<br />
 
 
 B. Configuration
 
-1. Adding user by creating password file.
+1. Adding user by creating password file.<br />
+$ sudo mosquitto_passwd -c /etc/mosquitto/pwfile terasys<br />
 
-$ sudo mosquitto_passwd -c /etc/mosquitto/pwfile terasys
+2. For more users, use below command without -c parameter to not override the password file:<br />
+$ sudo mosquitto_passwd /etc/mosquitto/pwfile terasys2<br />
 
-2. For more users, use below command without -c parameter to not override the password file:
+3. You will be able to see user list and hashed passwords like below :<br />
+$ cat /etc/mosquitto/pwfile<br />
 
-$ sudo mosquitto_passwd /etc/mosquitto/pwfile terasys2
+4. Create ACL (Access control list) file :<br />
+$ sudo cp /etc/mosquitto/aclfile.example /etc/mosquitto/aclfile<br />
 
-3. You will be able to see user list and hashed passwords like below :
+5. Configure ACL by adding your users with privileged topics. By using vi or nano editor, add the lines below to the ACL file :<br />
+user terasys<br />
+topic teradev/#<br />
 
-$ cat /etc/mosquitto/pwfile
+user terasys2<br />
+topic teradev2/#<br />
 
-4. Create ACL (Access control list) file :
+6. Add database destination for mosquitto :<br />
+$ sudo mkdir /var/lib/mosquitto/<br />
+$ sudo chown mosquitto:mosquitto /var/lib/mosquitto/ -R<br />
 
-$ sudo cp /etc/mosquitto/aclfile.example /etc/mosquitto/aclfile
+7. Create mosquitto configuration file :<br />
+$ sudo cp /etc/mosquitto/mosquitto.conf.example /etc/mosquitto/mosquitto.conf<br />
 
-5. Configure ACL by adding your users with privileged topics. By using vi or nano editor, add the lines below to the ACL file :
-
-user terasys
-
-topic teradev/#
-
-
-user terasys2
-
-topic teradev2/#
-
-6. Add database destination for mosquitto :
-
-$ sudo mkdir /var/lib/mosquitto/
-
-$ sudo chown mosquitto:mosquitto /var/lib/mosquitto/ -R
-
-7. Create mosquitto configuration file :
-
-$ sudo cp /etc/mosquitto/mosquitto.conf.example /etc/mosquitto/mosquitto.conf
-
-8. Need to bind configuration files and settings by adding the lines to the mosquitto.conf :
+8. Need to bind configuration files and settings by adding the lines to the mosquitto.conf :<br />
 listener 1883
 listener 8883
 protocol websockets
