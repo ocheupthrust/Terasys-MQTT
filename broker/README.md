@@ -1,4 +1,4 @@
-##A. Installation
+#A. Installation
 
 0. Steps below will be applied on Droplet or any instance that is target computer. 
 So need SSH connection first, use the command below :
@@ -25,7 +25,7 @@ $ sudo make install
 $ sudo /sbin/ldconfig
 
 
-##B. Configuration
+#B. Configuration
 
 1. Adding user by creating password file.
 $ sudo mosquitto_passwd -c /etc/mosquitto/pwfile terasys
@@ -70,7 +70,7 @@ acl_file /etc/mosquitto/aclfile
 $ sudo ufw allow 1883
 $ sudo ufw allow 8883
 
-##C. ACL and User Configuration
+#C. ACL and User Configuration
 
 ACL denotes which user can access to the given specific topic. 
 $ is wildcard and terasys user can access any topic begins with teradev/...
@@ -79,16 +79,16 @@ To avoid reboot and add users dynamically to an database, you can use the librar
 https://github.com/jpmens/mosquitto-auth-plug
 
 About configuration;
-listener parameter denotes which port will be used for MQTT connection.
-The second listener definition denotes the websocket supported MQTT connection port when the protocol parameter denotes websocket.
-As we defined websocket support from config.mk, we will be able to support that feature.
-persistance_* lines denotes a database space where mqtt broker use.
-allow_anonymous will make anonymous connection accepted. It would be beneficial for gathering some stats from broker. Check test step below for more info.
-password_file denotes the password file path that we created.
-acl_file denotes the access control list file path that we created.
+1. listener parameter denotes which port will be used for MQTT connection.
+2. The second listener definition denotes the websocket supported MQTT connection port when the protocol parameter denotes websocket.
+3. As we defined websocket support from config.mk, we will be able to support that feature.
+4. persistance_* lines denotes a database space where mqtt broker use.
+5. allow_anonymous will make anonymous connection accepted. It would be beneficial for gathering some stats from broker. Check test step below for more info.
+6. password_file denotes the password file path that we created.
+7. acl_file denotes the access control list file path that we created.
 
 
-##D. Running
+#D. Running
 
 1. To run mosquitto broker, type the command below with your config file :
 $ sudo mosquitto -c /etc/mosquitto/mosquitto.conf > mosquitto.log &
@@ -107,12 +107,14 @@ $ nano /etc/rc.local
 7. Add the following line to the above file re-spawn on restart :
 exec /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf >> /etc/mosquitto/mosquitto.log &
 
-##E. Testing
+#E. Testing
 
 1. There will be some executables comes after mosquitto installation to help mqtt publish and subscribe.
 2. First, lets subscribe to a topic anonymously :
+
 $ mosquitto_sub -h 159.203.164.3 -p 1883 -v -t '$SYS/broker/uptime'
 3. This subscribtion will receive data from broker about broker's uptime. There are also other options to see the broker stats like below :
+
 $ mosquitto_sub -h 159.203.164.3 -p 1883 -v -t '$SYS/broker/messages/received'
 $ mosquitto_sub -h 159.203.164.3 -p 1883 -v -t '$SYS/broker/messages/sent'
 $ mosquitto_sub -h 159.203.164.3 -p 1883 -v -t '$SYS/broker/bytes/#'
