@@ -49,7 +49,6 @@ $ sudo cp /etc/mosquitto/aclfile.example /etc/mosquitto/aclfile<br />
 5. Configure ACL by adding your users with privileged topics. By using vi or nano editor, add the lines below to the ACL file :<br />
 user terasys<br />
 topic teradev/#<br />
-
 user terasys2<br />
 topic teradev2/#<br />
 
