@@ -110,24 +110,21 @@ About configuration;<br />
 
 1. To run mosquitto broker, type the command below with your config file :
 $ sudo mosquitto -c /etc/mosquitto/mosquitto.conf > mosquitto.log &<br />
-
-2. You will get logs to mosquitto.log file.
-3. Process will be daemonized by & parameter.
+2. You will get logs to mosquitto.log file.<br />
+3. Process will be daemonized by & parameter.<br />
 4. For future use, some daemonizing would be added :<br />
 nano /etc/init/mosquitto.conf<br />
-
-5. Add below lines into it :
+5. Add below lines into it :<br />
 description "Mosquitto MQTT broker"<br />
 start on runlevel [2345]<br />
 stop on runlevel [06]<br />
 respawn<br />
 exec /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf >> /etc/mosquitto/mosquitto.log<br />
-
-6. To make broker running on system restart, modify this file :
+6. To make broker running on system restart, modify this file :<br />
 $ nano /etc/rc.local<br />
-
-7. Add the following line to the above file re-spawn on restart :
+7. Add the following line to the above file re-spawn on restart :<br />
 exec /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf >> /etc/mosquitto/mosquitto.log &<br />
+
 
 ## E. Testing
 
