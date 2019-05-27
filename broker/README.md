@@ -10,16 +10,24 @@ $ sudo adduser mosquitto<br />
 
 2. Below libraries are default for mosquitto: <br />
 $ sudo apt-get update<br />
-$ sudoapt-get install build-essential libwrap0-dev libssl-dev libc-ares-dev uuid-dev xsltproc<br /> 
+$ sudoapt-get install build-essential libwrap0-dev libssl-dev libc-ares-dev uuid-dev xsltproc cmake unzip<br /> 
 
 3. For MQTT over Websocket support, install the websockets library:<br />
-$ sudo apt-get install libwebsockets-dev<br />
+$ wget https://github.com/warmcat/libwebsockets/archive/v2.4.2.zip
+$ mv v2.4.2.zip libwebsockets-2.4.2.zip
+$ unzip libwebsockets-2.4.2.zip
+$ cd libwebsockets-2.4.2
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ sudo make install
 
 4. Get mosquitto library and unpack:<br />
 $ cd /home/mosquitto<br />
-$ wget http://mosquitto.org/files/source/mosquitto-1.4.8.tar.gz<br />
-$ tar xvzf mosquitto-1.4.8.tar.gz<br />
-$ cd mosquitto-1.4.8<br />
+$ wget http://mosquitto.org/files/source/mosquitto-1.6.2.tar.gz<br />
+$ tar xvzf mosquitto-1.6.2.tar.gz<br />
+$ cd mosquitto-1.6.2<br />
 
 5. To enable MQTT over Websocket support, modify the config.mk and enable WITH_WEBSOCKETS flag like :<br />
 WITH_WEBSOCKETS:=yes<br />
