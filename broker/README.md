@@ -13,15 +13,15 @@ $ sudo apt-get update<br />
 $ sudoapt-get install build-essential libwrap0-dev libssl-dev libc-ares-dev uuid-dev xsltproc cmake unzip<br /> 
 
 3. For MQTT over Websocket support, install the websockets library:<br />
-$ wget https://github.com/warmcat/libwebsockets/archive/v2.4.2.zip
-$ mv v2.4.2.zip libwebsockets-2.4.2.zip
-$ unzip libwebsockets-2.4.2.zip
-$ cd libwebsockets-2.4.2
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
-$ sudo make install
+$ wget https://github.com/warmcat/libwebsockets/archive/v2.4.2.zip  
+$ mv v2.4.2.zip libwebsockets-2.4.2.zip  
+$ unzip libwebsockets-2.4.2.zip  
+$ cd libwebsockets-2.4.2  
+$ mkdir build  
+$ cd build  
+$ cmake ..  
+$ make  
+$ sudo make install  
 
 4. Get mosquitto library and unpack:<br />
 $ cd /home/mosquitto<br />
