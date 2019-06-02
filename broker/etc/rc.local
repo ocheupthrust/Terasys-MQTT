@@ -11,7 +11,7 @@
 #
 # By default this script does nothing.
 
-exec /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf >> /etc/mosquitto/mosquitto.log &
+exec /usr/local/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf >> /etc/mosquitto/mosquitto.log &
 
 exit 0
 
