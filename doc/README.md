@@ -1,7 +1,7 @@
 # TerasysHUB IoT Platform - MQTT Implementation
 This document highlights how to accomplish broker installation, configuration, running and testing phases.
 ## Installation
-Detailed installation guide for Mosquitto broker and Mosquitto authorization plug-in was provided.
+Detailed installation guide for Mosquitto broker and Mosquitto authentication plug-in was provided.
 ### Broker Installation
 * First of all, on your instance or droplet; mosquitto broker will need a user named as mosquitto :
 ```
@@ -44,7 +44,7 @@ $ sudo make install
 ```
 $ sudo /sbin/ldconfig
 ```
-### Authorization Plug-in Installation
+### Authentication Plug-in Installation
 * Get the code for auth plug-in installation:
 ```
 $ git clone https://github.com/jpmens/mosquitto-auth-plug.git
@@ -57,7 +57,7 @@ https://github.com/gabod2000/Terasys-MQTT/blob/master/broker/auth/mosquitto_v162
 ```
 $ patch < mosquitto_v162_auth.patch
 ```
-* Like Mosquitto, the plug-in also have a config file, it is **config.mk** resides in the source. It requires the location of the downloaded Mosquitto library source code. Also SSL binary need to be provided. Modify the config.mk :
+* Like Mosquitto, the plug-in also have a config file, it is **config.mk** resides in the downloaded source code. It requires the location of the downloaded Mosquitto library source code. Also SSL binary need to be provided. Modify the config.mk :
 ```
 MOSQUITTO_SRC =/home/$USER/mosquitto-1.6.2
 OPENSSLDIR = /usr/bin
@@ -108,10 +108,10 @@ $ sudo ufw allow 8883
 ```
 * You will see explanations of the config params in comment line. For more info you can check [Mosquitto Conf Man Page](https://mosquitto.org/man/mosquitto-conf-5.html).
 NOTICE: Your mosquitto broker service need to be restarted once the configuration file changes to be taken in action.
-### Authorization Plug-in Configuration
-As you see in the config file, there are several fields for user and topic management. In default, Mosquitto supports files for storing users and topics. **BUT**, they require to reboot mosquitto to refresh user or topic info provided n the file. **SO**, we need to use authorization (Auth) plugin and database to **INSTANTLY** add or remove users and their topic privileges, without reboot or file I/O.
-#### Authorization Database
-Provided authorization plug-in supports several database technologies to store user and topic data. We prefer MySQL for full feature support and variety of man page. Before heading on, be sure that you have completed **Installation** steps and installed MySQL correctly.
+### Authentication Plug-in Configuration
+As you see in the config file, there are several fields for user and topic management. In default, Mosquitto supports files for storing users and topics. **BUT**, they require to reboot mosquitto to refresh user or topic info provided n the file. **SO**, we need to use authentication (Auth) plugin and database to **INSTANTLY** add or remove users and their topic privileges, without reboot or file I/O.
+#### Authentication Database
+Provided authentication plug-in supports several database technologies to store user and topic data. We prefer MySQL for full feature support and variety of man page. Before heading on, be sure that you have completed [Installation](https://github.com/gabod2000/Terasys-MQTT/tree/master/doc#authentication-plug-in-installation) steps and installed MySQL correctly.
 * MySQL will require a database first of anything. In that database, we can create required tables and insert tinto that tables. To accomplish this creation task, there is a script collection for creating required plug-in database and tables. Additionally, it inserts a dummy test user. Here the file is :
 ```
 https://github.com/gabod2000/Terasys-MQTT/blob/master/broker/auth/mysql_generator.sql
@@ -120,7 +120,7 @@ https://github.com/gabod2000/Terasys-MQTT/blob/master/broker/auth/mysql_generato
 ```
 $ cat mysql_generator.sql | mysql -u root -p
 ```
-* Above command dumps the script into mysql. The param -u defines the user which is **root**. Now it will require the MySQL root password. Type it as we provide in **Installation** steps :
+* Above command dumps the script into mysql. The param -u defines the user which is **root**. Now it will require the MySQL root password. Type it as we provide in [Installation](https://github.com/gabod2000/Terasys-MQTT/tree/master/doc#authentication-plug-in-installation) steps :
 ```
 terasys123
 ```
@@ -138,9 +138,39 @@ mysql -u root -p
 * Type below commands in the figure in to MySQL shell to list your created tables in the database :
 ![Alt text](mysql_show_table.png?raw=true "MySQL Show Tables")
 #### Users
-Each incoming user will have an MQTT user with the registered e-mail address. 
+Each incoming user will have an MQTT user with the registered e-mail address + password. We will get these data on registration phase as denoted before. Gathered data will be stored in the database table called **users**. You can dump this table with given command in mysql shell :
+![Alt text](mysql_users.png?raw=true "MySQL Show Tables")
+* To insert a user into this table on runtime, briefly you will need 2 fields : **username** and **hashed password (pw)**. Insert command could be written like below in mysql shell :
+```
+mysql> INSERT INTO users (username, pw) VALUES ('terasys@terasys.com', 'PBKDF2$sha256$901$wP1NMwt7dEeuTspT$RbXp2S/ZcoLNOjpT3GVjFhZHlZaH1RzI');
+```
+* Hash algorithm is **PBKDF2** to avoid raw passwords existance in the database. So we need to convert all raw passwords in PBKDF2 hashed format.
+* You can use a plug-in provided tool to generate hashed passwords. Just run below commands and type the raw password you want to make it hashed :
+```
+$ cd mosquitto-auth-plug
+$ ./np
+```
+* The method is hard to integrate into your system due to binary execution. Instead of it, we will use a proper NodeJS based hash generator :
+```
+https://github.com/gabod2000/Terasys-MQTT/blob/master/broker/auth/pbkdf2.js
+```
+* In the given code, function named **ConvertToPBKDF2** takes raw password as parameter and return value can be diretly inserted into the database.
+NOTICE: In the table structure given above, there is a field called **super**. If this is set for the user, he will not need any ACL rule to access any topic. This is disabled in default.
 #### Access Control List and Topics
-#### Testing Authorization Plug-in
+Access Control List (ACL) is a mechanism to prevent un-authorized access to user specific topics. Think that, there are several topics created in the broker for several users; without ACLs there will be no control mechanism to check whether the requested topic is eligible for the user.
+Likewise the **users** table, ACL has also another table called **acls** in our database. Below you can find the structure of this table with given command in mysql shell :
+![Alt text](mysql_acls.png?raw=true "MySQL Show ACLs")
+* To insert an ACL rule into the table, briefly you will need 2 fields : **username** and **topic**. Insert command could be written like below in mysql shell :
+```
+mysql> INSERT INTO acls (username, topic) VALUES ('terasys@terasys.com', 'terasys@terasys.com/#');
+```
+* Note that, as we will need to disambugate the connected users, we will use their e-mails as unique identifier prefix for their topics. So each user's topic will start with his e-mail.
+* For ease of user experience, we will make user to be authorized for all of his topics after e-mail prefix. To do this, we use the wildcard **#** symbol to make the all path of the topic accessable. For more info, please follow up Topics/Subscriptions section of [Mosquitto Man Page](https://mosquitto.org/man/mqtt-7.html).
+NOTICE: In the table structure given above, there is a field called **rw**. This field represents if the topic is read-only (1) or read/write (2). Default is assigned as read/write.
+#### Testing Authentication Plug-in
+To test your user in the database, first [make sure that your broker is running](https://github.com/gabod2000/Terasys-MQTT/tree/master/doc#running) section and then [try to connect with your clients](https://github.com/gabod2000/Terasys-MQTT/tree/master/doc#working-with-clients).
+You will see logs like below once auth plug-in is successfully running and checking user authentication and topic authorization :
+![Alt text](auth_running.png?raw=true "Mosquitto Auth-plug-in")
 ## Running
 * To run mosquitto broker **manually**, type the command below with your config file :
 ```
