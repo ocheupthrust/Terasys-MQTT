@@ -194,37 +194,32 @@ You can test up the MQTT connectivity with several methods listed below.
 ### Websocket Clients
 HiveMQ has a proven MQTT WebClient to test your MQTT broker. Below picture has steps to how to test the broker with it:
 ![Alt text](hivemq_connect.png?raw=true "HiveMQ WebSocket Client")
-```
-1. First, navigate to [MQTT WebClient Page](http://www.hivemq.com/demos/websocket-client/)
-2. Write down the IP address of the instance where broker runs. Currently it is : 159.203.164.3
-3. WebClients use MQTT via WebSockets. Our Websocket port number is : 8883.
-4. Client id must be a unique key. Keep what page suggests. 
-5. User name is required for MQTT connection. Our test username is : terasys
-6. Test password is : terasys123
-7. Simply press to the Connect button.
-```
+* First, navigate to [MQTT WebClient Page](http://www.hivemq.com/demos/websocket-client/)
+* Write down the IP address of the instance where broker runs. Currently it is : **159.203.164.3**
+* WebClients use MQTT via WebSockets. Our Websocket port number is : **8883**.
+* Client id must be a unique key. Keep what page suggests. 
+* User name is required for MQTT connection. Our test username is : **terasys**
+* Test password is : **terasys123**
+* Simply press to the Connect button.
 After connection is done, follow below steps:
 ![Alt text](hivemq_pubsub.png?raw=true "WebSocket Client Pub/Sub")
-```
-1. Subscribe to the test topic on given button : teradev/device/99
-2. Type same topic on the Publish topic area to send some data to on topic.
-3. Write any message to send.
-4. Press Publish button.
-5. Received messaged will be listed in the Messages section.
-```
+* Subscribe to the test topic on given button : **teradev/device/99**
+* Type same topic on the Publish topic area to send some data to on topic.
+* Write any message to send.
+* Press Publish button.
+* Received messaged will be listed in the Messages section.
+
 ### Mosquitto Console Tools
 Mosquitto MQTT broker provides some sample binaries to easily publish and subscribe messages to test your broker. Follow up the steps below:
 ![Alt text](droplet_mqtt_test1.png?raw=true "Console Test")
-```
-1. Open two terminals and use mosquitto_sub and mosquitto_pub binaries with given parameters. First subscribe and then publish to the subscribed topic.
-2. Provide the broker instance IP address with -h parameter : 159.203.164.3
-3. MQTT port will be provided via -p parameter : 1883
-REMINDER: MQTT over TCP IP is differs from MQTT over Websockets.
-4. Provide the topic to be published and subscribed with -t parameter : teradev/device/100
-5. User name is required for MQTT connection. Our test username is : terasys
-6. Test password is : terasys123
-7. Send any kind of data and will be listed on subscribed terminal.
-```
+* Open two terminals and use mosquitto_sub and mosquitto_pub binaries with given parameters. First subscribe and then publish to the subscribed topic.
+* Provide the broker instance IP address with -h parameter : **159.203.164.3**
+* MQTT port will be provided via -p parameter : **1883**
+* REMINDER: MQTT over TCP IP is differs from MQTT over Websockets.
+* Provide the topic to be published and subscribed with -t parameter : **teradev/device/100**
+* User name is required for MQTT connection. Our test username is : **terasys**
+* Test password is : **terasys123**
+* Send any kind of data and will be listed on subscribed terminal.
 ### Device Clients
 Supported embedded device clients with different SDKs will be described in here.
 #### ESP8266 Arduino
