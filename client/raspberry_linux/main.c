@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 
     while (1)
     {
+        /* Publishing periodically to your MQTT topic. */
         MQTTPublish(MQTT_TOPIC, "terasys test");
         sleep(TIMEOUT_TO_PUBLISH);
     }
