@@ -2,13 +2,12 @@
 #define ARDUINO_CREDENTIALS_H
 
 /* WiFi Credentials*/
-#define STA_SSID "YOUR_SSID"
-#define STA_PASS "YOUR_PASS"
+#define STA_SSID "YOUR_WIFI_SSID"
+#define STA_PASS "YOUR_WIFI_PASS"
 
 /* MQTT Credentials */
-#define MQTT_BROKER       "MQTT_BROKER_IP"
-#define MQTT_BROKER_PORT  1883
-#define MQTT_USERNAME     "MQTT_USER"
-#define MQTT_KEY          "MQTT_PASS"
+#define MQTT_USERNAME "YOUR_MQTT_USERNAME"
+#define MQTT_KEY      "YOUR_MQTT_PASS"
+#define MQTT_TOPIC    "YOUR_MQTT_TEST_TOPIC"
 
 #endif /* ARDUINO_CREDENTIALS_H */

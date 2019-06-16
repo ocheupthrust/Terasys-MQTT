@@ -8,7 +8,6 @@
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
 
-static const Protocol_t protocol = MQTT;
 boolean mqttInitCompleted = false;
 String clientId = "terasys-" + String(ESP.getChipId());
 
@@ -33,13 +32,11 @@ void performConnect()
     {
       Printf("Trace   : Connected to Broker.\n");
 
-      /* Example publisment to the topic: */
-      MQTTPublish(MQTT_TOPIC_SENSOR, "temp:25");
-    
       /* Example subscription to the topics. */
-      MQTTSubscribe(MQTT_TOPIC_SENSOR);
-      MQTTSubscribe(MQTT_TOPIC_RELAY);
+      MQTTSubscribe(MQTT_TOPIC);
 
+      /* Example publisment to the topic. */
+      MQTTPublish(MQTT_TOPIC, "temp:25");
     }
     else
     {
@@ -94,6 +91,10 @@ void MQTTLoop()
     if (!MQTTConnected())
     {
       performConnect();
+    }
+    else 
+    {
+
     }
     mqttClient.loop();
   }

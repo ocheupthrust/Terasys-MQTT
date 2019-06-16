@@ -12,7 +12,7 @@ void SerialInit()
 
 void GPIOInit()
 {
-  /* Not implemented yet. */
+  /* Set initial state for your GPIOs. */
 }
 
 void HWInit()

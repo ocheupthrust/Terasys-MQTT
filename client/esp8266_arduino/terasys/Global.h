@@ -4,14 +4,6 @@
 #define Printf            Serial.printf
 #define SERIAL_BAUD_RATE  9600
 
-/* Protocol Definitions */
-typedef enum Protocol
-{
-  WebSocket = 0,
-  MQTT,
-  HTTP
-}Protocol_t;
-
 /* Buffer sizes */
 #define LEN_IP_MAX          17 
 #define LEN_SSID_MAX        32 
