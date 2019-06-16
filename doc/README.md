@@ -221,9 +221,12 @@ Mosquitto MQTT broker provides some sample binaries to easily publish and subscr
 * Test password is : **terasys123**
 * Send any kind of data and will be listed on subscribed terminal.
 ### Device Clients
-Supported embedded device clients with different SDKs will be described in here.
-#### ESP8266 Arduino
-#### ESP8266 Micropython
+Supported embedded device clients and code samples are described below.
+#### ESP8266
+* [ESP8266 with Arduino](https://github.com/gabod2000/Terasys-MQTT/tree/master/client/esp8266_arduino)
+* [ESP8266 with Micropython](https://github.com/gabod2000/Terasys-MQTT/tree/master/client/esp8266_micropython)
+* [ESP8266 with Lua](https://github.com/gabod2000/Terasys-MQTT/tree/master/client/esp8266_lua)
 #### ESP32 C SDK
-#### Raspberry
-
+* [ESP32 with C SDK](https://github.com/gabod2000/Terasys-MQTT/tree/master/client/esp32_c_sdk)
+#### Linux based systems
+* [RaspberryPi, BeagleBone, Ubuntu and other Linux based Devices](https://github.com/gabod2000/Terasys-MQTT/tree/master/client/raspberry_linux)
