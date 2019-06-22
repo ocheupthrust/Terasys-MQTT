@@ -17,14 +17,14 @@ https://github.com/gabod2000/Terasys-MQTT/tree/master/client/esp32_c_sdk
 ```
 $ make menuconfig
 ```
-* From the opened **config menu** screen, we will first configure our Wi-Fi credentials. To do that, select **Example Connection Configuration** like given below :
+* From the opened **config menu** screen, we will first configure our Wi-Fi credentials. To do that, select **Example Connection Configuration** like given below :  
 ![Alt text](img/menuconfig.png?raw=true "Menuconfig")
-* Provide your SSID and Password into the opening screen :
+* Provide your SSID and Password into the opening screen :  
 ![Alt text](img/connectionconfig.png?raw=true "WiFi configuration")
 * Save and exit. 
-* Jump into the **TeraSysHub MQTT Configuration** tab to provide MQTT credentials of your user :
+* Jump into the **TeraSysHub MQTT Configuration** tab to provide MQTT credentials of your user :  
 ![Alt text](img/terasysconfig.png?raw=true "Terasys configuration menu")
-* You will be asked for your MQTT **username**, **password** and test **topic**. Provide them into the menu :
+* You will be asked for your MQTT **username**, **password** and test **topic**. Provide them into the menu :  
 ![Alt text](img/mqttconfig.png?raw=true "MQTT configuration")
 * Save and exit. 
 * Now your configuration is ready to connect to WiFi and MQTT Broker. Exit from the **menuconfig** to the console.
