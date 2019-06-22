@@ -1,6 +1,4 @@
-
-
-## Setup Guide for Linux based (Raspberry, BeagleBone, Ubuntu etc.) systems
+## Client Connection Guide for Linux based (Raspberry, BeagleBone, Ubuntu etc.) systems
 
 This sample will show you how to connect, send and receive data via terasyshub.
 

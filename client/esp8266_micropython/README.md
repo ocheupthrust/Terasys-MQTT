@@ -1,4 +1,4 @@
-## Setup Guide for ESP devices with Micropython
+## Client Connection Guide for ESP devices with Micropython
 Micropython is getting popular on resource constrained embedded devices day by day. Terasys provide micropython code sample for resource constrained devices like ESP826 and ESP32.
 Below you can find the steps to make sample run on your device.
 ### Getting ready for Micropython

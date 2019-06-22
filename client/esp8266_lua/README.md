@@ -1,4 +1,4 @@
-## Setup Guide for ESP8266 with Lua
+## Client Connection Guide for ESP8266 with Lua
 ### Preparing Firmware
 * You need to burn Lua firmware to your ESP8266 before proceeding. Please follow [this link](https://learn.adafruit.com/diy-esp8266-home-security-with-lua-and-mqtt/how-to-re-flash-your-esp8266) for one of the best practice of firmware burning.
 * When you navigate to [NodeMCU custom build page](https://nodemcu-build.com/index.php), do not forget to select **MQTT** from **Select Modules to Include** tab. PRovide your e-mail address and start build. Once build is completed, you will be notified and firmware download link will be provided.
