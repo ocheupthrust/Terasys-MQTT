@@ -1,11 +1,11 @@
-## TeraSysHub.io MQTT Web Page App
+## TerasysHUB IoT Platform MQTT Web Page App
 This web app provides MQTT connectivity via browser to send and receive MQTT messages instantly.  
-You will provide your TeraSysHub credentials to connect to the Broker.  
+You will provide your TerasysHUB credentials to connect to the Broker.  
 This app was powered by pure HTML, JavaScript and adaptive CSS.  
 ### Run the Web App
 Basically, download all items under this repository and open **index.html** page. It will include all required JavaScript libraries automatically.
 ### How to Use It
-* First, provide your TeraSysHub username and password into the given fields like below :
+* First, provide your TerasysHUB username and password into the given fields like below :
 ![Alt text](img/userpage.png?raw=true "Connect page")
 * You can use test user credentials :
 ```
