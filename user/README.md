@@ -3,7 +3,17 @@ This web app provides MQTT connectivity via browser to send and receive MQTT mes
 You will provide your TerasysHUB credentials to connect to the Broker.  
 This app was powered by pure HTML, JavaScript and adaptive CSS.  
 ### Run the Web App
-Basically, download all items under this repository and open **index.html** page. It will include all required JavaScript libraries automatically.
+* Basically, download all items under TeraSysHub repository via git :
+```
+$ git clone https://github.com/gabod2000/Terasys-MQTT.git
+```
+* Or, just download as zip from the (donwload button)[https://github.com/gabod2000/Terasys-MQTT] in the GitHub.
+* Navigate into **user** directory in gathered TeraSysHubrepository :
+```
+$ cd Terasys-MQTT/user
+```
+* Open **index.html** page with your favorite browser. 
+* It will include all required JavaScript libraries automatically.
 ### How to Use It
 * First, provide your TerasysHUB username and password into the given fields like below :
 ![Alt text](img/userpage.png?raw=true "Connect page")
